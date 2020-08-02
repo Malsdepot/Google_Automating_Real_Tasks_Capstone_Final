@@ -10,16 +10,16 @@ outFormat = "JPEG"
 outSize = (600, 400)
 
 for f in os.listdir(src):
-    try:
-        im=Image.open(src + f)
-    except OSError:
-        print("Unable to open: " + str(src + f))
-        next
+    if "tiff" in str(f):
+        try:
+            im=Image.open(src + f)
+        except OSError:
+            print("Unable to open: " + str(src + f))
+            next
     
-    im = im.convert("RGB")
-    im = im.resize(outSize)
-    newName = os.path.basename(f)
-    print(newName)
-    outFile = src + f
-    im = im.save(outFile+".jpeg", outFormat)
-    print ("Saved as : " + str(outFile))
+        im = im.convert("RGB")
+        im = im.resize(outSize)
+        newName = os.path.basename(f)
+        newName = newName.replace("tiff", "jpeg")
+        print(src + newName)
+        im = im.save(src + newName, outFormat)
